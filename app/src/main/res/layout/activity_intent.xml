@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.IntentActivity">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+    <RadioGroup
+        android:id="@+id/intent_group"
+        android:layout_weight="9"
+        android:orientation="horizontal"
+        android:background="@mipmap/bg_homepage_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioButton
+            android:id="@+id/intent_home"
+            android:background="@drawable/circle_home_selector"
+            android:layout_width="@dimen/dp_25"
+            android:checked="true"
+            android:layout_marginTop="@dimen/dp_15"
+            android:button="@null"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_height="@dimen/dp_25" />
+        <RadioButton
+            android:id="@+id/intent_circle"
+            android:background="@drawable/circle_quanzi_selector"
+            android:layout_width="@dimen/dp_25"
+            android:button="@null"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_37"
+            android:layout_height="@dimen/dp_25" />
+        <RadioButton
+            android:id="@+id/intent_shopping"
+            android:background="@mipmap/tab_home_bottom_gouwuche"
+            android:layout_width="@dimen/dp_50"
+            android:button="@null"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_height="50dp" />
+        <RadioButton
+            android:id="@+id/intent_indent"
+            android:background="@drawable/circle_zhangdan_selector"
+            android:layout_width="@dimen/dp_25"
+            android:button="@null"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_height="@dimen/dp_25" />
+        <RadioButton
+            android:id="@+id/intent_my"
+            android:background="@drawable/circle_wode_selector"
+            android:layout_width="@dimen/dp_25"
+            android:button="@null"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_height="@dimen/dp_25" />
+    </RadioGroup>
+</LinearLayout>

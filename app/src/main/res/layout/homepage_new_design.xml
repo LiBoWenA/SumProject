@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:paddingRight="@dimen/dp_10"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="@dimen/dp_4"
+        android:background="@drawable/homepage_new_design_selector"
+        >
+
+    <ImageView
+        android:padding="@dimen/dp_8"
+        android:layout_width="@dimen/dp_95"
+        android:layout_height="@dimen/dp_109"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/new_design_image_phone"
+        />
+
+    <TextView
+        android:id="@+id/new_design_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center"
+        android:text="啦1111111111111111111111111111111111"
+        android:ellipsize="end"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:maxLines="1"
+        />
+    <TextView
+        android:id="@+id/new_design_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#f00"
+        android:text="$:666.66"
+        android:layout_marginTop="@dimen/dp_2"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_5"
+        />
+
+    </LinearLayout>
+
+</LinearLayout>
