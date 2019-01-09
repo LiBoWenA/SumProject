@@ -286,6 +286,29 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/no_img"
+        >
+        <ImageView
+            android:id="@+id/no_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/meiyoushop"
+            android:layout_centerInParent="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抱歉，没有商品了~"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_below="@id/no_image"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/homepage_serch"
         android:visibility="gone"
@@ -294,10 +317,10 @@
         android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
     <RelativeLayout
         android:id="@+id/one_level"
-        android:layout_below="@id/rel"
         android:layout_width="match_parent"
         android:paddingLeft="@dimen/dp_24"
         android:visibility="gone"
+        android:layout_below="@id/rel"
         android:background="@mipmap/rectangle"
         android:layout_height="@dimen/dp_36">
         <android.support.v7.widget.RecyclerView
@@ -313,7 +336,7 @@
         android:id="@+id/two_level"
         android:layout_below="@id/one_level"
         android:layout_width="match_parent"
-        android:background="#5d5d5d"
+        android:background="#805d5d5d"
         android:visibility="gone"
         android:padding="@dimen/dp_20"
         android:layout_height="@dimen/dp_92">
@@ -325,5 +348,4 @@
 
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
-
 </RelativeLayout>

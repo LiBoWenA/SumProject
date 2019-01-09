@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class IPersenterImpl implements IPersenter {
     private IView iView;
-    IModel iModel;
+    IModelImpl iModel;
 
     public IPersenterImpl(IView iView) {
         this.iView = iView;
@@ -49,6 +49,38 @@ public class IPersenterImpl implements IPersenter {
             }
         });
     }
+
+    //delete
+    @Override
+    public void deleteShowRequestData(String path, Class clazz) {
+        iModel.deleteRequesData(path, clazz, new MyCallBack() {
+            @Override
+            public void sucess(Object data) {
+                iView.startRequestData(data);
+            }
+
+            @Override
+            public void faild(String error) {
+                iView.startRequestData(error);
+            }
+        });
+    }
+
+    @Override
+    public void putShowRequestData(String path, Map<String, String> map, Class clazz) {
+        iModel.putRequestData(path, map, clazz, new MyCallBack() {
+            @Override
+            public void sucess(Object data) {
+                iView.startRequestData(data);
+            }
+
+            @Override
+            public void faild(String error) {
+                iView.startRequestData(error);
+            }
+        });
+    }
+
     //解绑
     public void onDestory(){
         if (iModel != null){

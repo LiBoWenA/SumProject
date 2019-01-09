@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.IntentActivity">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    tools:context=".activity.HomePageActivity">
+    <FrameLayout
+        android:id="@+id/home_sum_pager"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"></FrameLayout>
     <RadioGroup
         android:id="@+id/intent_group"
         android:layout_weight="9"

@@ -6,13 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.tiamo.sumproject.MainActivity;
 import com.example.tiamo.sumproject.R;
+import com.example.tiamo.sumproject.UrlApis;
 import com.example.tiamo.sumproject.adapter.CircleAdapter;
 import com.example.tiamo.sumproject.bean.CircleBean;
 import com.example.tiamo.sumproject.bean.PriseBean;
@@ -23,10 +25,12 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CircleFragment extends Fragment implements IView {
-    private String path = "http://172.17.8.100/small/circle/v1/findCircleList?userId=%d&sessionId=%s&page=%d&count=5";
-    private String prisePath = "http://172.17.8.100/small/circle/verify/v1/addCircleGreat";
     IPersenterImpl iPersenter;
+    @BindView(R.id.recyclr)
     XRecyclerView recyclerView;
     CircleAdapter adapter;
     int page;
@@ -37,7 +41,7 @@ public class CircleFragment extends Fragment implements IView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.circlefragment,null);
-        recyclerView = view.findViewById(R.id.recyclr);
+        ButterKnife.bind(this,view);
         return view;
     }
 
@@ -61,12 +65,12 @@ public class CircleFragment extends Fragment implements IView {
             @Override
             public void onRefresh() {
                 page = 1;
-                iPersenter.showRequestData(String.format(path,ids,sessionId,page),CircleBean.class);
+                iPersenter.showRequestData(String.format(UrlApis.CIRCLE_PATH,ids,sessionId,page),CircleBean.class);
             }
 
             @Override
             public void onLoadMore() {
-                iPersenter.showRequestData(String.format(path,ids,sessionId,page),CircleBean.class);
+                iPersenter.showRequestData(String.format(UrlApis.CIRCLE_PATH,ids,sessionId,page),CircleBean.class);
             }
         });
 
@@ -74,11 +78,35 @@ public class CircleFragment extends Fragment implements IView {
         ids = intent.getIntExtra("userId",0);
         sessionId = intent.getStringExtra("sessionId");
         Log.i("TAG",ids+sessionId);
-        iPersenter.showRequestData(String.format(path, ids, sessionId,page),CircleBean.class);
-
+        iPersenter.showRequestData(String.format(UrlApis.CIRCLE_PATH, ids, sessionId,page),CircleBean.class);
+        adapter.setOnClick(new CircleAdapter.OnClick() {
+            @Override
+            public void Click(int great, int id,int position) {
+                if (great == 1){
+                    //如果为点赞在次点击就是取消点赞
+                    cancelGreatCircle(id);
+                    adapter.priceCencel(position);
+                }else{
+                    //否则就是点赞
+                    greatCircle(id);
+                    adapter.priceSucess(position);
+                }
+            }
+        });
 
     }
 
+    //点赞
+    private void greatCircle(int id) {
+        Map<String,String> map = new HashMap<>();
+        map.put("circleId",id+"");
+        iPersenter.showRequestData(UrlApis.CIRCLE_GREAT,map,PriseBean.class);
+    }
+
+    //取消点赞
+    private void cancelGreatCircle(int id) {
+        iPersenter.deleteShowRequestData(String.format(UrlApis.CIRCLE_CANCLEGREAT,id),PriseBean.class);
+    }
 
     @Override
     public void startRequestData(Object data) {
@@ -96,7 +124,13 @@ public class CircleFragment extends Fragment implements IView {
         }
         if (data instanceof PriseBean){
             PriseBean bean = (PriseBean) data;
-            Log.i("TAG",bean.getMessage());
+            if(bean.equals("请先登陆")){
+                Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getContext(),MainActivity.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(getContext(), bean.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

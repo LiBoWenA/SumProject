@@ -32,14 +32,6 @@ public class MainBean {
     }
 
     public static class ResultBean {
-        /**
-         * headPic : http://172.17.8.100/images/small/head_pic/2018-11-21/20181121100733.jpg
-         * nickName : OP_8mY65
-         * phone : 16619958760
-         * sessionId : 154276714558512
-         * sex : 1
-         * userId : 12
-         */
 
         private String headPic;
         private String nickName;

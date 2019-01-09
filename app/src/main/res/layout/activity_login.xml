@@ -141,7 +141,7 @@
         android:layout_alignLeft="@id/view1"
         android:layout_alignRight="@id/view1"
         android:text="注册"
-        android:layout_below="@+id/btn_login"
+        android:layout_below="@id/btn_login"
         android:textSize="@dimen/dp_18"
         android:layout_marginTop="@dimen/dp_50"
         android:textColor="#ff5f71"

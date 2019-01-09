@@ -10,13 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tiamo.sumproject.activity.IntentActivity;
+import com.example.tiamo.sumproject.activity.HomePageActivity;
 import com.example.tiamo.sumproject.activity.LoginActivity;
 import com.example.tiamo.sumproject.bean.MainBean;
 import com.example.tiamo.sumproject.persenter.IPersenterImpl;
@@ -25,14 +24,24 @@ import com.example.tiamo.sumproject.view.IView;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements IView{
 
-    private String path = "http://172.17.8.100/small/user/v1/login";
+    private String path = "user/v1/login";
+    @BindView(R.id.btn_intent_activity)
     Button loginButton;
+    @BindView(R.id.main_register)
     TextView registertext;
+    @BindView(R.id.show_hide_eye)
     ImageView imageView;
-    EditText edPhone,edPwd;
+    @BindView(R.id.main_phone)
+    EditText edPhone;
+    @BindView(R.id.main_pwd)
+    EditText edPwd;
     IPersenterImpl iPersenter;
+    @BindView(R.id.check_pwd)
     CheckBox ck_pwd;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements IView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
         editor = sharedPreferences.edit();
         //获取资源ID
@@ -48,12 +58,6 @@ public class MainActivity extends AppCompatActivity implements IView{
 
     private void init() {
         iPersenter = new IPersenterImpl(this);
-        ck_pwd = findViewById(R.id.check_pwd);
-        loginButton = findViewById(R.id.btn_intent_activity);
-        registertext = findViewById(R.id.main_register);
-        imageView = findViewById(R.id.show_hide_eye);
-        edPhone = findViewById(R.id.main_phone);
-        edPwd = findViewById(R.id.main_pwd);
         //点击复选框记住账号和密码
         ck_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +79,17 @@ public class MainActivity extends AppCompatActivity implements IView{
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String,String> map = new HashMap<>();
-                map.put("phone",edPhone.getText().toString());
-                map.put("pwd",edPwd.getText().toString());
-                iPersenter.showRequestData(path,map,MainBean.class);
+                String phone = edPhone.getText().toString();
+                String pwd = edPwd.getText().toString();
+                if(Validator.isPhoneValidator(phone)&&Validator.isPwdValidator(pwd)){
+                    Map<String,String> map = new HashMap<>();
+                    map.put("phone",edPhone.getText().toString());
+                    map.put("pwd",edPwd.getText().toString());
+                    iPersenter.showRequestData(path,map,MainBean.class);
+                }else{
+                    Toast.makeText(MainActivity.this,"账号或密码有误",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         //点击注册进行跳转
@@ -127,14 +138,18 @@ public class MainActivity extends AppCompatActivity implements IView{
             MainBean mainBean = (MainBean) data;
             //如果登录成功则进行跳转
             if (mainBean.getMessage().equals("登录成功")){
-                Intent intent = new Intent(MainActivity.this,IntentActivity.class);
-                intent.putExtra("userId",mainBean.getResult().getUserId());
-                intent.putExtra("sessionId",mainBean.getResult().getSessionId());
-                Log.i("TAG",mainBean.getResult().getUserId()+"......."+mainBean.getResult().getSessionId());
+                Intent intent = new Intent(MainActivity.this,HomePageActivity.class);
+                editor.putString("SessionId",mainBean.getResult().getSessionId());
+                editor.putString("UserId",mainBean.getResult().getUserId()+"");
+                Log.i("TAG+TAG",mainBean.getResult().getSessionId()+"++"+mainBean.getResult().getUserId());
+                editor.commit();
                 startActivity(intent);
                 finish();
             }else{
-                //否则吐司错误消息
+                //否则吐司错误消息并清空
+                editor.remove("SessionId");
+                editor.remove("UserId");
+                editor.commit();
                 Toast.makeText(MainActivity.this,mainBean.getMessage().toString(),Toast.LENGTH_SHORT).show();
             }
         }

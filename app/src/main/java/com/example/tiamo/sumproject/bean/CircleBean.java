@@ -4,12 +4,6 @@ import java.util.List;
 
 public class CircleBean {
 
-    /**
-     * result : [{"commodityId":3,"content":"好用，就是太贵","createTime":1542639261000,"greatNum":0,"headPic":"http://172.17.8.100/images/small/head_pic/2018-11-17/20181117120315.jpg","id":4,"image":"http://172.17.8.100/images/small/circle_pic/2018-11-19/3509720181119085421.jpg,http://172.17.8.100/images/small/circle_pic/2018-11-19/7196220181119085421.jpg","nickName":"风情的人","userId":1,"whetherGreat":2}]
-     * message : 查询成功
-     * status : 0000
-     */
-
     private String message;
     private String status;
     private List<ResultBean> result;

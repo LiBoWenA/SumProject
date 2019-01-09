@@ -29,6 +29,7 @@ import com.example.tiamo.sumproject.adapter.LifeAdapter;
 import com.example.tiamo.sumproject.adapter.NewDesignAdapter;
 import com.example.tiamo.sumproject.adapter.OneLevelAdapter;
 import com.example.tiamo.sumproject.adapter.TwoLevelAdapter;
+import com.example.tiamo.sumproject.adapter.TwoLevelSerchAdapter;
 import com.example.tiamo.sumproject.bean.BannerBean;
 import com.example.tiamo.sumproject.bean.HomeBean;
 import com.example.tiamo.sumproject.bean.HomeShopBean;
@@ -83,6 +84,8 @@ public class HomePageFragment extends Fragment implements IView {
     RelativeLayout relativeLayoutTwo;
     @BindView(R.id.two_level_rv)
     RecyclerView recyclerViewtwo;
+    @BindView(R.id.no_img)
+    RelativeLayout relativeLayoutNo;
     private IPersenterImpl iPersenter;
     private NewDesignAdapter designAdapter;
     private FashionAdapter fashionAdapter;
@@ -96,6 +99,7 @@ public class HomePageFragment extends Fragment implements IView {
     private OneLevelAdapter oneLevelAdapter;
     private boolean isShow = true;
     private TwoLevelAdapter twoLevelAdapter;
+    private TwoLevelSerchAdapter twoLevelSerchAdapter;
 
     @Nullable
     @Override
@@ -193,27 +197,37 @@ public class HomePageFragment extends Fragment implements IView {
             page++;
             xRecyclerViewNew.loadMoreComplete();
             xRecyclerViewNew.refreshComplete();
-        }
+        }//点击搜索
         if (data instanceof HomeserchBean){
             HomeserchBean bean = (HomeserchBean) data;
             if (page == 1) {
+                if (bean.getResult().size() == 0){
+                    relativeLayoutNo.setVisibility(View.VISIBLE);
+                }else{
+                    relativeLayoutNo.setVisibility(View.GONE);
+                }
                 homeSerchAdapter.setData(bean.getResult());
             }else{
                 homeSerchAdapter.addData(bean.getResult());
             }
             page++;
-        }
+        }//一级列表
         if (data instanceof OneLevelBean){
             OneLevelBean bean = (OneLevelBean) data;
             oneLevelAdapter.setDate(bean.getResult());
-        }
+        }//二级列表
         if (data instanceof TwoLevelBean){
             TwoLevelBean bean = (TwoLevelBean) data;
             twoLevelAdapter.setDate(bean.getResult());
-        }
+        }//二级列表条目具体搜索
         if (data instanceof TwoLevelSerchBean){
             TwoLevelSerchBean bean = (TwoLevelSerchBean) data;
-
+            if (page == 1) {
+                twoLevelSerchAdapter.setData(bean.getResult());
+            }else{
+                twoLevelSerchAdapter.addData(bean.getResult());
+            }
+            page++;
         }
     }
     //点击点点点隐藏了scroll显示xrecycle
@@ -249,6 +263,7 @@ public class HomePageFragment extends Fragment implements IView {
                 textLifeShow.setVisibility(View.GONE);
                 iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
                 setDatas(rxxpid);
+                twoLevelIsShow();
                 break;
             case R.id.fashion_image:
                 page = 1;
@@ -262,6 +277,7 @@ public class HomePageFragment extends Fragment implements IView {
                 textLifeShow.setVisibility(View.GONE);
                 iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
                 setDatas(mlssId);
+                twoLevelIsShow();
                 break;
             case R.id.life_image:
                 page = 1;
@@ -275,11 +291,13 @@ public class HomePageFragment extends Fragment implements IView {
                 textLifeShow.setVisibility(View.VISIBLE);
                 iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
                 setDatas(pzshId);
+                twoLevelIsShow();
                 break;
             case R.id.serch_image:
                 serchBtn.setVisibility(View.VISIBLE);
                 edSerch.setVisibility(View.VISIBLE);
                 serchImage.setVisibility(View.GONE);
+                twoLevelIsShow();
                 break;
             case R.id.serch_btn:
                 page = 1;
@@ -289,6 +307,7 @@ public class HomePageFragment extends Fragment implements IView {
                 linearLayoutNewDesign.setVisibility(View.GONE);
                 iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
                 setxRecyclerView(s);
+                twoLevelIsShow();
                 break;
             case R.id.three_level:
                 if (isShow) {
@@ -314,17 +333,43 @@ public class HomePageFragment extends Fragment implements IView {
                     break;
         }
     }
-
+    public void twoLevelIsShow(){
+        if (isShow){
+            relativeLayoutOne.setVisibility(View.GONE);
+            relativeLayoutTwo.setVisibility(View.GONE);
+        }
+    }
+    //点击二级列表条目
     private void twoLevelClick() {
         twoLevelAdapter.setOnClick(new TwoLevelAdapter.OnClick() {
             @Override
-            public void Click(String id) {
+            public void Click(final String id) {
                 page = 1;
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,page),TwoLevelSerchBean.class);
+                gridLayout(xRecyclerView);
+                scrollView.setVisibility(View.GONE);
+                xRecyclerView.setVisibility(View.VISIBLE);
+                relativeLayoutOne.setVisibility(View.GONE);
+                relativeLayoutTwo.setVisibility(View.GONE);
+                twoLevelSerchAdapter = new TwoLevelSerchAdapter(getActivity());
+                xRecyclerView.setAdapter(twoLevelSerchAdapter);
+                xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+                    @Override
+                    public void onRefresh() {
+                        page = 1;
+                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
+                        xRecyclerView.refreshComplete();
+                    }
+                    @Override
+                    public void onLoadMore() {
+                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
+                        xRecyclerView.loadMoreComplete();
+                    }
+                });
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
             }
         });
     }
-
+    //一级列表点击
     private void oneLevelClick() {
         oneLevelAdapter.setOnClick(new OneLevelAdapter.OnClick() {
             @Override
@@ -333,7 +378,7 @@ public class HomePageFragment extends Fragment implements IView {
             }
         });
     }
-
+    //搜索
     public void setxRecyclerView(final String s){
         gridLayout(xRecyclerView);
         homeSerchAdapter = new HomeSerchAdapter(getActivity());
@@ -361,6 +406,7 @@ public class HomePageFragment extends Fragment implements IView {
             edSerch.setVisibility(View.GONE);
             serchBtn.setVisibility(View.GONE);
             serchImage.setVisibility(View.VISIBLE);
+            relativeLayoutNo.setVisibility(View.GONE);
         }
     }
     @Override

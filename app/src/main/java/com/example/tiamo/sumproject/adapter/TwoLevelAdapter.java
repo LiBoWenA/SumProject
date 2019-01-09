@@ -42,7 +42,7 @@ public class TwoLevelAdapter extends RecyclerView.Adapter<TwoLevelAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull TwoLevelAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.textView.setText(list.get(i).getName());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onClick != null){

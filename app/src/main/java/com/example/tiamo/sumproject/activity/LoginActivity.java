@@ -20,18 +20,29 @@ import com.example.tiamo.sumproject.view.IView;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity implements IView {
 
-    EditText loginEdPhone,loginEdCode,loginEdPwd;
+    @BindView(R.id.login_phone)
+    EditText loginEdPhone;
+    @BindView(R.id.login_pwd)
+    EditText loginEdPwd;
+    @BindView(R.id.login_code)
+    EditText loginEdCode;
+    @BindView(R.id.login_but)
     Button loginBtn;
+    @BindView(R.id.btn_login)
     TextView intentBtn;
+
     IPersenterImpl iPersenter;
     private String path = "http://172.17.8.100/small/user/v1/register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ButterKnife.bind(this);
         //获取资源ID
         init();
 
@@ -39,13 +50,6 @@ public class LoginActivity extends AppCompatActivity implements IView {
 
     private void init() {
         iPersenter = new IPersenterImpl(this);
-        //edtext框的资源ID
-        loginEdPhone = findViewById(R.id.login_phone);
-        loginEdPwd = findViewById(R.id.login_pwd);
-        loginEdCode = findViewById(R.id.login_code);
-        //获取需要点击按钮的id
-        loginBtn = findViewById(R.id.login_but);
-        intentBtn = findViewById(R.id.btn_login);
         //点击按钮进行注册
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,5 +88,11 @@ public class LoginActivity extends AppCompatActivity implements IView {
                 Toast.makeText(this,bean.getMessage().toString(),Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        iPersenter.onDestory();
     }
 }

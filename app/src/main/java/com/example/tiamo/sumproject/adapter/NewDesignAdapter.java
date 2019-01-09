@@ -1,6 +1,7 @@
 package com.example.tiamo.sumproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.tiamo.sumproject.R;
+import com.example.tiamo.sumproject.activity.homepagefragment_activity.DetailsActivity;
 import com.example.tiamo.sumproject.bean.HomeBean;
 
 import java.util.ArrayList;
@@ -44,10 +46,18 @@ public class NewDesignAdapter extends RecyclerView.Adapter<NewDesignAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewDesignAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull NewDesignAdapter.ViewHolder viewHolder, final int i) {
         Glide.with(context).load(list.get(i).getMasterPic()).into(viewHolder.imageView);
         viewHolder.tTitle.setText(list.get(i).getCommodityName());
         viewHolder.tPrice.setText("¥："+list.get(i).getPrice());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,DetailsActivity.class);
+                intent.putExtra("commodityId",list.get(i).getCommodityId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

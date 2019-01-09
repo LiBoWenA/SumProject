@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.homepagefragment_activity.DetailsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:paddingLeft="@dimen/dp_24"
+        android:paddingRight="@dimen/dp_24"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.stx.xhb.xbanner.XBanner
+                android:id="@+id/details_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_274"></com.stx.xhb.xbanner.XBanner>
+
+            <RelativeLayout
+                android:id="@+id/view_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/details_banner"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/details_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:text="999"
+                    android:textColor="#f00"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/sales_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/details_price"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:layout_alignParentRight="true"
+                    android:text="lalalalalalallalalalalal"
+                    android:textColor="#666"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_price"
+                android:layout_marginTop="@dimen/dp_20"
+                android:maxLines="1" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_10"
+                android:id="@+id/weigh_kg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/details_title"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="#666"
+                    android:text="重量"
+                    />
+                <TextView
+                    android:id="@+id/wei_kg"
+                    android:textSize="12sp"
+                    android:textColor="#666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/shop_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/weigh_kg"
+                android:text="商品详情"
+                android:layout_marginTop="@dimen/dp_20"
+                />
+            <View
+                android:id="@+id/view1"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_2"
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/shop_details"
+                android:background="#ff5e70"
+                />
+
+            <WebView
+                android:id="@+id/wed_View"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view1"
+                tools:ignore="WebViewLayout"></WebView>
+
+        </RelativeLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="@dimen/dp_50"
+        android:background="@drawable/homepage_details"
+        android:layout_marginBottom="@dimen/dp_70"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="@dimen/dp_40"></RelativeLayout>
+    <ImageView
+        android:id="@+id/details_image_add_shop"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/common_btn_add_n"
+        android:layout_width="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_79"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_height="@dimen/dp_24" />
+    <RelativeLayout
+        android:layout_width="@dimen/dp_50"
+        android:background="@drawable/homepage_details"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="@dimen/dp_40">
+        <ImageView
+            android:id="@+id/details_image_buy_shop"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/common_btn_buy_n"
+            android:layout_width="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:layout_alignParentBottom="true"
+            android:layout_height="@dimen/dp_24" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/detail_back_btn"
+        android:background="@mipmap/common_nav_btn_back_n"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30"
+        />
+
+</RelativeLayout>

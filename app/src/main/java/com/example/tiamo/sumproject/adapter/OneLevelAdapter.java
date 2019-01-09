@@ -47,7 +47,6 @@ public class  OneLevelAdapter extends RecyclerView.Adapter<OneLevelAdapter.ViewH
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("IIIIIIIDDDDDD","+++"+list.get(i).getId());
                 if (onClick != null){
 
                     onClick.Click(list.get(i).getId());
