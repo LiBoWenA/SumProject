@@ -20,4 +20,9 @@ public class UrlApis {
     public static String ADD_SHOPPING = "order/verify/v1/syncShoppingCart";
     //查询购物车
     public static String SELECT_SHOP = "order/verify/v1/findShoppingCart";
+    //用户自身收货地址
+    public static String ADDRESS_GOODS = "user/verify/v1/receiveAddressList";
+    //创建订单
+    public static String CREAT_INDENT = "order/verify/v1/createOrder";
+
 }

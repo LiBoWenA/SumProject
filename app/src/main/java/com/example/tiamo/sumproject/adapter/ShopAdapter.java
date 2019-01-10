@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+
     @NonNull
     @Override
     public ShopAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -45,10 +47,26 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ShopAdapter.ViewHolder viewHolder, final int i) {
         Glide.with(context).load(list.get(i).getPic()).into(viewHolder.shopImg);
         viewHolder.tTitle.setText(list.get(i).getCommodityName());
         viewHolder.tPrice.setText(list.get(i).getPrice()+"");
+        viewHolder.shopItemCk.setChecked(list.get(i).isCheck());
+        viewHolder.shopItemCk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                list.get(i).setCheck(isChecked);
+                if (isChecked){
+                    if (shopLisener!= null){
+                        shopLisener.lisener(list);
+                    }
+                }else{
+                    if (shopLisener!= null){
+                        shopLisener.lisener(list);
+                    }
+                }
+            }
+        });
         viewHolder.shopCustomView.setData(this,list,i);
         viewHolder.shopCustomView.setOnCallBack(new ShopCustomView.CallBackListener() {
             @Override

@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="horizontal"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/shop_addnum"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_40"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
         android:text="+"
         android:background="#fff"
+        android:layout_alignBottom="@id/shop_ednum"
         />
     <EditText
         android:id="@+id/shop_ednum"
-        android:layout_width="@dimen/dp_40"
+        android:layout_width="@dimen/dp_25"
+        android:layout_toRightOf="@id/shop_addnum"
         android:layout_height="wrap_content"
         />
     <Button
         android:id="@+id/shop_deletenum"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_40"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
         android:text="-"
+        android:layout_alignBottom="@id/shop_ednum"
+        android:layout_toRightOf="@id/shop_ednum"
         android:textSize="22sp"
         android:background="#fff"
         />
-</LinearLayout>
+</RelativeLayout>

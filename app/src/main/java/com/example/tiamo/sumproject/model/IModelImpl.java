@@ -1,5 +1,7 @@
 package com.example.tiamo.sumproject.model;
 
+import android.util.Log;
+
 import com.example.tiamo.sumproject.MyApp;
 import com.example.tiamo.sumproject.callback.MyCallBack;
 import com.example.tiamo.sumproject.network.RxManager;
@@ -22,6 +24,7 @@ public class IModelImpl implements IModel {
             @Override
             public void onSuccess(String data) {
                 Object o = new Gson().fromJson(data, clazz);
+                Log.i("ADDRESS",o.toString()+"m层");
                 myCallBack.sucess(o);
             }
 

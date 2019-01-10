@@ -3,6 +3,7 @@ package com.example.tiamo.sumproject.network;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.tiamo.sumproject.MyApp;
 
@@ -104,6 +105,7 @@ public class RxManager<T> {
         if (map == null) {
             map = new HashMap<>();
         }
+
         rxApis.post(url, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -129,11 +131,13 @@ public class RxManager<T> {
             public void onNext(ResponseBody responseBody) {
                 try {
                     String data = responseBody.string();
+                    Log.i("ADDRESS",data+"成功返回的放法");
                     if (listener != null) {
                         listener.onSuccess(data);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.i("ADDRESS",e.getMessage()+"失败的报错信息");
                     if (listener != null) {
                         listener.onFail(e.getMessage());
                     }
@@ -144,6 +148,7 @@ public class RxManager<T> {
             public void onError(Throwable e) {
                 if (listener != null) {
                     listener.onFail(e.getMessage());
+                    Log.i("ADDRESS",e.getMessage()+"异常的报错信息");
                 }
             }
 

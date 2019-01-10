@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.example.tiamo.sumproject.R;
 import com.example.tiamo.sumproject.UrlApis;
+import com.example.tiamo.sumproject.bean.indentfragmentbean.IndentShopBean;
 import com.example.tiamo.sumproject.persenter.IPersenterImpl;
 import com.example.tiamo.sumproject.view.IView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -55,7 +56,16 @@ public class IndentFragment extends Fragment implements IView {
         super.onActivityCreated(savedInstanceState);
         iPersenter = new IPersenterImpl(this);
         page = 1;
+        init();
     }
+
+    private void init() {
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+
+    }
+
     //布局管理者
     public void setIndent(){
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -65,15 +75,39 @@ public class IndentFragment extends Fragment implements IView {
     }
     @OnClick({R.id.indent_sunindent,R.id.indent_payment,R.id.indent_waitcargo,R.id.indent_evaluate,R.id.indent_sucess})
     public void setOnClick(View v){
+        page = 1;
         switch (v.getId()){
             case R.id.indent_sunindent:
                 //点击全部订单进行查询
-//                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,page),);
+                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,0,page),IndentShopBean.class);
+                break;
+            case R.id.indent_payment:
+                //点击查看待付款
+                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,1,page),IndentShopBean.class);
+                break;
+            case R.id.indent_waitcargo:
+                //点击查看待收货
+                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,2,page),IndentShopBean.class);
+                break;
+            case R.id.indent_evaluate:
+                //点击查看待评价
+                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,3,page),IndentShopBean.class);
+                break;
+            case R.id.indent_sucess:
+                //点击查看已完成
+                iPersenter.showRequestData(String.format(UrlApis.INDENT_FIND,9,page),IndentShopBean.class);
+                break;
+                default:
+                    break;
+
         }
     }
 
     @Override
     public void startRequestData(Object data) {
+        if (data instanceof IndentShopBean){
+
+        }
 
     }
 

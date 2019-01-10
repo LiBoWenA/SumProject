@@ -1,8 +1,9 @@
 package com.example.tiamo.sumproject.bean.shopfragmentbean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SelectShopBean {
+public class SelectShopBean implements Serializable {
     private String status;
     private String message;
     private List<ResultBean> result;
@@ -31,13 +32,22 @@ public class SelectShopBean {
         this.result = result;
     }
 
-    public class ResultBean{
+    public static class ResultBean implements Serializable{
         private int commodityId;
         private String commodityName;
         private String pic;
         private double price;
         private int count;
         private boolean isCheck = false;
+
+        public ResultBean(int commodityId, String commodityName, String pic, double price, int count, boolean isCheck) {
+            this.commodityId = commodityId;
+            this.commodityName = commodityName;
+            this.pic = pic;
+            this.price = price;
+            this.count = count;
+            this.isCheck = isCheck;
+        }
 
         public boolean isCheck() {
             return isCheck;

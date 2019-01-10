@@ -6,7 +6,7 @@
         android:id="@+id/recyclr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_24"
         android:layout_marginLeft="@dimen/dp_24"
 

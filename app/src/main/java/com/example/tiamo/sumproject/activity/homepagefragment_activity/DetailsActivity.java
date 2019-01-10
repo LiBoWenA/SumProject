@@ -140,26 +140,30 @@ public class DetailsActivity extends AppCompatActivity implements IView {
                 }
                 //把查询到的数据返回给添加购物车
                 String string="[";
-                for (int i=0;i<list.size();i++){
-                    if(Integer.valueOf(commodityId)==list.get(i).getCommodityId()){
-                        int count = list.get(i).getCount();
-                        count++;
-                        list.get(i).setCount(count);
-                        break;
-                    }else if(i==list.size()-1){
-                        list.add(new ShopBean(Integer.valueOf(commodityId),1));
-                        break;
+                if (list.size() == 0){
+                    list.add(new ShopBean(Integer.valueOf(commodityId),1));
+                }else {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
+                            int count = list.get(i).getCount();
+                            count++;
+                            list.get(i).setCount(count);
+                            break;
+                        } else if (i == list.size() - 1) {
+                            list.add(new ShopBean(Integer.valueOf(commodityId), 1));
+                            break;
+                        }
                     }
                 }
-                for (ShopBean resultBean:list){
-                    string+="{\"commodityId\":"+resultBean.getCommodityId()+",\"count\":"+resultBean.getCount()+"},";
+                for (ShopBean resultBean : list) {
+                    string += "{\"commodityId\":" + resultBean.getCommodityId() + ",\"count\":" + resultBean.getCount() + "},";
                 }
                 String substring = string.substring(0, string.length() - 1);
-                substring+="]";
-                Map<String,String> map=new HashMap<>();
-                map.put("data",substring);
+                substring += "]";
+                Map<String, String> map = new HashMap<>();
+                map.put("data", substring);
                 //发送请求添加购物车
-                iPersenter.putShowRequestData(UrlApis.ADD_SHOPPING,map,ShopDetailsBean.class);
+                iPersenter.putShowRequestData(UrlApis.ADD_SHOPPING, map, ShopDetailsBean.class);
 
             }else{
                 Toast.makeText(DetailsActivity.this,bean.getMessage().toString(), Toast.LENGTH_SHORT).show();

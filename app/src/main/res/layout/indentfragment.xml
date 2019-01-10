@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_24"
         android:background="@drawable/indentfragment_shape"
         android:orientation="horizontal"
@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="全部订单"
+                android:gravity="center"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -51,10 +52,11 @@
                 android:background="@mipmap/daifuk_ddf" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="待付款"
+                android:gravity="center"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -72,10 +74,11 @@
                 android:background="@mipmap/daishouh_ddf" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="待收货"
+                android:gravity="center"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -94,9 +97,10 @@
                 android:background="@mipmap/daipingj_ddf" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
                 android:text="待评价"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -116,22 +120,28 @@
                 android:background="@mipmap/yiwanc_ddf" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dp_40"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
                 android:text="已完成"
                 android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/indent_recycler"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
         android:layout_height="match_parent">
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/indent_recycler"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_height="match_parent">
 
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+    </ScrollView>
+
 </LinearLayout>

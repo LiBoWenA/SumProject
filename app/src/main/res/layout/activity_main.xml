@@ -59,7 +59,6 @@
         android:inputType="numberPassword"
         android:hint="登录密码"
         android:textSize="@dimen/dp_18"
-        android:password="true"
         android:textColorHint="#fff"
         android:textColor="#fff"
         />

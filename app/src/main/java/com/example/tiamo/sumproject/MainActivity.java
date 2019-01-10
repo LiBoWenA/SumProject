@@ -92,6 +92,23 @@ public class MainActivity extends AppCompatActivity implements IView{
 
             }
         });
+        //点击小眼睛进行显示密码与否
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击进行密码的显示隐藏
+                if (imageView == null || imageView == null) {
+                    return;
+                }
+                if (imageView.isSelected()) {
+                    imageView.setSelected(false);
+                    edPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else {
+                    imageView.setSelected(true);
+                    edPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
         //点击注册进行跳转
         registertext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,17 +117,6 @@ public class MainActivity extends AppCompatActivity implements IView{
                 startActivity(intent);
             }
         });
-        //点击进行密码的显示隐藏
-        if (imageView == null || imageView == null) {
-            return;
-        }
-        if (imageView.isSelected()) {
-            imageView.setSelected(false);
-            edPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        } else {
-            imageView.setSelected(true);
-            edPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        }
 
         //点击记住密码
         boolean pwd_true = sharedPreferences.getBoolean("pwd_ck",false);
