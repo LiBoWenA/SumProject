@@ -20,6 +20,7 @@ import com.example.tiamo.sumproject.bean.homefragmentbean.HomePageDetailsBean;
 import com.example.tiamo.sumproject.bean.homefragmentbean.ShopDetailsBean;
 import com.example.tiamo.sumproject.bean.shopfragmentbean.SelectShopBean;
 import com.example.tiamo.sumproject.bean.shopfragmentbean.ShopBean;
+import com.example.tiamo.sumproject.fragment.HomePageFragment;
 import com.example.tiamo.sumproject.persenter.IPersenterImpl;
 import com.example.tiamo.sumproject.view.IView;
 import com.stx.xhb.xbanner.XBanner;

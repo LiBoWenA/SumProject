@@ -24,7 +24,7 @@
             android:id="@+id/goods_address_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="李小二"
+            android:text="用户名"
             android:textSize="14sp"
             android:textColor="#666"
             />
@@ -32,7 +32,7 @@
             android:id="@+id/goods_address_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12345555233"
+            android:text="用户手机号码"
             android:textSize="@dimen/dp_12"
             android:layout_alignParentRight="true"
             android:textColor="#666"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/goods_address_name"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="lalalalalal"
+            android:text="邮件地址"
             android:textSize="12sp"
             android:textColor="#666"
             />
@@ -62,6 +62,7 @@
 
 
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/addre_no"
@@ -87,23 +88,23 @@
 
     <ScrollView
         android:id="@+id/scll"
-        android:layout_below="@id/addre"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_60"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/addre"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_60">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/show_goods"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/indentfragment_shape"
             android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_20"
-            android:paddingBottom="@dimen/dp_20"
             android:paddingRight="@dimen/dp_10"
-            android:background="@drawable/indentfragment_shape"
-            android:layout_height="wrap_content">
+            android:paddingBottom="@dimen/dp_20">
 
         </android.support.v7.widget.RecyclerView>
     </ScrollView>
@@ -114,17 +115,50 @@
         android:layout_height="@dimen/dp_50">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/address_describe"
-            android:gravity="center"
-            android:layout_toLeftOf="@id/btn_commit_goods"
-            android:text="共0件商品，需支付0.00元"
+            android:id="@+id/address_describe_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:text="共" />
+        <TextView
+            android:id="@+id/address_describe_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/address_describe_text"
+            android:textColor="#f00"
+            android:text="la"
+            />
+        <TextView
+            android:id="@+id/address_describe_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="件商品，需支付"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/address_describe_num"
+            />
+        <TextView
+            android:id="@+id/address_describe_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="la"
+            android:textColor="#f00"
+            android:layout_toRightOf="@id/address_describe_text1"
+            android:layout_alignBottom="@id/address_describe_text1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="元"
+            android:layout_toRightOf="@id/address_describe_price"
+            android:layout_alignBottom="@id/address_describe_price"
             />
 
         <Button
             android:id="@+id/btn_commit_goods"
             android:layout_width="@dimen/dp_118"
+            android:visibility="visible"
             android:layout_height="@dimen/dp_50"
             android:text="提交订单"
             android:layout_alignParentRight="true"
@@ -133,4 +167,15 @@
             />
 
     </RelativeLayout>
+    <RelativeLayout
+    android:id="@+id/pop_show"
+    android:layout_below="@id/addre"
+    android:visibility="gone"
+    android:background="@drawable/shopactivity_shape"
+    android:layout_marginLeft="@dimen/dp_24"
+    android:layout_marginRight="@dimen/dp_24"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_280">
+
+</RelativeLayout>
 </RelativeLayout>

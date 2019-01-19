@@ -26,6 +26,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity implements IView{
 
@@ -45,11 +46,14 @@ public class MainActivity extends AppCompatActivity implements IView{
     CheckBox ck_pwd;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private Unbinder bind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        bind = ButterKnife.bind(this);
+        iPersenter = new IPersenterImpl(this);
         sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
         editor = sharedPreferences.edit();
         //获取资源ID
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements IView{
     }
 
     private void init() {
-        iPersenter = new IPersenterImpl(this);
+
         //点击复选框记住账号和密码
         ck_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,29 +139,32 @@ public class MainActivity extends AppCompatActivity implements IView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        iPersenter.onDestory();
+        if (iPersenter != null) {
+            iPersenter.onDestory();
+        }
+        bind.unbind();
     }
 
     @Override
     public void startRequestData(Object data) {
-        if (data instanceof MainBean){
-            MainBean mainBean = (MainBean) data;
-            //如果登录成功则进行跳转
-            if (mainBean.getMessage().equals("登录成功")){
-                Intent intent = new Intent(MainActivity.this,HomePageActivity.class);
-                editor.putString("SessionId",mainBean.getResult().getSessionId());
-                editor.putString("UserId",mainBean.getResult().getUserId()+"");
-                Log.i("TAG+TAG",mainBean.getResult().getSessionId()+"++"+mainBean.getResult().getUserId());
-                editor.commit();
-                startActivity(intent);
-                finish();
-            }else{
-                //否则吐司错误消息并清空
-                editor.remove("SessionId");
-                editor.remove("UserId");
-                editor.commit();
-                Toast.makeText(MainActivity.this,mainBean.getMessage().toString(),Toast.LENGTH_SHORT).show();
-            }
+        if (data instanceof MainBean) {
+        MainBean mainBean = (MainBean) data;
+        //如果登录成功则进行跳转
+        if (mainBean.getMessage().equals("登录成功")) {
+            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+            editor.putString("SessionId", mainBean.getResult().getSessionId());
+            editor.putString("UserId", mainBean.getResult().getUserId() + "");
+            Log.i("TAG+TAG", mainBean.getResult().getSessionId() + "++" + mainBean.getResult().getUserId());
+            editor.commit();
+            startActivity(intent);
+            finish();
+        } else {
+            //否则吐司错误消息并清空
+            editor.remove("SessionId");
+            editor.remove("UserId");
+            editor.commit();
+            Toast.makeText(MainActivity.this, mainBean.getMessage().toString(), Toast.LENGTH_SHORT).show();
         }
+    }
     }
 }

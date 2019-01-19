@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tiamo.sumproject.R;
 import com.example.tiamo.sumproject.UrlApis;
@@ -32,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class ShopFragment extends Fragment implements IView {
     IPersenterImpl iPersenter;
@@ -47,12 +49,13 @@ public class ShopFragment extends Fragment implements IView {
     private SelectShopBean selectShopBean;
     private List<SelectShopBean.ResultBean> result;
     private double price;
+    private Unbinder bind;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.shopfragment,null);
-        ButterKnife.bind(this,view);
+        bind = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -94,6 +97,19 @@ public class ShopFragment extends Fragment implements IView {
 
     }
 
+    /*@Override
+    public void onPause() {
+        super.onPause();
+        iPersenter.showRequestData(UrlApis.SELECT_SHOP,SelectShopBean.class);
+    }*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        iPersenter.showRequestData(UrlApis.SELECT_SHOP,SelectShopBean.class);
+
+    }
+
     @OnClick({R.id.ck_chose,R.id.close_price})
     public void onClick(View v) {
         switch (v.getId()){
@@ -108,20 +124,24 @@ public class ShopFragment extends Fragment implements IView {
             case R.id.close_price:
                 //TUDO:点击去结算进行跳转  带参是为选中状态的商品
                 List<SelectShopBean.ResultBean> listShop = new ArrayList<>();
-                Intent intent = new Intent(getActivity(),ShopActivity.class);
                 for (int i = 0; i < selectShopBean.getResult().size(); i++) {
                     if (selectShopBean.getResult().get(i).isCheck()){
                         listShop.add(new SelectShopBean.ResultBean(selectShopBean.getResult().get(i).getCommodityId(),
-                            selectShopBean.getResult().get(i).getCommodityName(),
-                            selectShopBean.getResult().get(i).getPic(),
-                            selectShopBean.getResult().get(i).getPrice(),
-                            selectShopBean.getResult().get(i).getCount(),
-                            selectShopBean.getResult().get(i).isCheck()
+                                selectShopBean.getResult().get(i).getCommodityName(),
+                                selectShopBean.getResult().get(i).getPic(),
+                                selectShopBean.getResult().get(i).getPrice(),
+                                selectShopBean.getResult().get(i).getCount(),
+                                selectShopBean.getResult().get(i).isCheck()
                         ));
                     }
                 }
-                intent.putExtra("list", (Serializable) listShop);
-                startActivity(intent);
+                if (listShop.size() == 0){
+                    Toast.makeText(getActivity(),"请选择要购买的商品哦~",Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(getActivity(), ShopActivity.class);
+                    intent.putExtra("list", (Serializable) listShop);
+                    startActivity(intent);
+                }
                 break;
                 default:
                     break;
@@ -133,9 +153,21 @@ public class ShopFragment extends Fragment implements IView {
     public void startRequestData(Object data) {
         if (data instanceof SelectShopBean){
             selectShopBean = (SelectShopBean) data;
-            result = selectShopBean.getResult();
-            adapter.setData(selectShopBean.getResult());
+            if (selectShopBean.getResult().size() == 0){
+                Toast.makeText(getActivity(),"还没有心仪的商品哦~",Toast.LENGTH_SHORT).show();
+            }else {
+                result = selectShopBean.getResult();
+                adapter.setData(selectShopBean.getResult());
+                adapter.notifyDataSetChanged();
+            }
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        iPersenter.onDestory();
+        bind.unbind();
     }
 }

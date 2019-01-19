@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_14"
-                    android:text="999"
+                    android:text="价格"
                     android:textColor="#f00"
                     android:textSize="20sp" />
 
@@ -47,7 +47,7 @@
                     android:layout_alignBottom="@id/details_price"
                     android:layout_marginTop="@dimen/dp_14"
                     android:layout_alignParentRight="true"
-                    android:text="lalalalalalallalalalalal"
+                    android:text="销量"
                     android:textColor="#666"
                     android:textSize="12sp" />
 

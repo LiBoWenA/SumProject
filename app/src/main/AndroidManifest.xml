@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tiamo.sumproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".MyApp"
@@ -11,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/touxiang_cf"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +34,24 @@
         <activity android:name=".activity.HomePageActivity" />
         <activity android:name=".activity.indentfragment_activity.IndentFragmentActivity" />
         <activity android:name=".activity.homepagefragment_activity.DetailsActivity" />
-        <activity android:name=".activity.shopfragmentactivity.ShopActivity"></activity>
+        <activity android:name=".activity.shopfragmentactivity.ShopActivity" />
+        <activity android:name=".activity.myfragment_activity.PersonActivity" />
+        <activity android:name=".activity.myfragment_activity.AddressActivity" />
+        <activity android:name=".activity.myfragment_activity.UpdateAddressActivity" />
+        <activity android:name=".activity.myfragment_activity.InsertAddressActivity" />
+        <activity android:name=".activity.myfragment_activity.FootActivity" />
+        <activity android:name=".activity.myfragment_activity.CircleActivity" />
+        <activity android:name=".activity.myfragment_activity.MoneyActivity" />
+        <activity android:name=".activity.indentfragment_activity.EvaluateActivity" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.tiamo.sumproject"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>

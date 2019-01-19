@@ -1,5 +1,7 @@
 package com.example.tiamo.sumproject.fragment;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,18 +12,22 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.tiamo.sumproject.R;
 import com.example.tiamo.sumproject.UrlApis;
+import com.example.tiamo.sumproject.activity.HomePageActivity;
 import com.example.tiamo.sumproject.adapter.FashionAdapter;
 import com.example.tiamo.sumproject.adapter.HomeSerchAdapter;
 import com.example.tiamo.sumproject.adapter.HomeShopAdapter;
@@ -45,6 +51,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+
 public class HomePageFragment extends Fragment implements IView {
     @BindView(R.id.banner_pager)
     XBanner pager;
@@ -76,16 +84,10 @@ public class HomePageFragment extends Fragment implements IView {
     XRecyclerView xRecyclerView;
     @BindView(R.id.three_level)
     ImageView imgLevel;
-    @BindView(R.id.one_level)
-    RelativeLayout relativeLayoutOne;
-    @BindView(R.id.one_level_rv)
-    RecyclerView recyclerViewOne;
-    @BindView(R.id.two_level)
-    RelativeLayout relativeLayoutTwo;
-    @BindView(R.id.two_level_rv)
-    RecyclerView recyclerViewtwo;
     @BindView(R.id.no_img)
     RelativeLayout relativeLayoutNo;
+    private RecyclerView recyclerViewOne;
+    private RecyclerView recyclerViewtwo;
     private IPersenterImpl iPersenter;
     private NewDesignAdapter designAdapter;
     private FashionAdapter fashionAdapter;
@@ -100,12 +102,14 @@ public class HomePageFragment extends Fragment implements IView {
     private boolean isShow = true;
     private TwoLevelAdapter twoLevelAdapter;
     private TwoLevelSerchAdapter twoLevelSerchAdapter;
+    private Unbinder bind;
+    private PopupWindow popupWindow;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homepagerfragment,container,false);
-        ButterKnife.bind(this,view);
+        bind = ButterKnife.bind(this, view);
         return view;
     }
     @Override
@@ -115,6 +119,7 @@ public class HomePageFragment extends Fragment implements IView {
         iPersenter.showRequestData(UrlApis.BANNER_URI,BannerBean.class);
         init();
     }
+
     private void init() {
         iPersenter.showRequestData(UrlApis.HOME_NEW_DESIGN_URI,HomeBean.class);
         //热销新品
@@ -123,6 +128,7 @@ public class HomePageFragment extends Fragment implements IView {
         fashion();
         //品质生活
         life();
+
     }
     private void life() {
         GridLayoutManager manager = new GridLayoutManager(getActivity(),2);
@@ -160,6 +166,210 @@ public class HomePageFragment extends Fragment implements IView {
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         re.setLayoutManager(manager);
     }
+
+    //点击点点点隐藏了scroll显示xrecycle
+    public void setDatas(final int id){
+        gridLayout(xRecyclerViewNew);
+        homeShopAdapter = new HomeShopAdapter(getActivity());
+        xRecyclerViewNew.setAdapter(homeShopAdapter);
+        xRecyclerViewNew.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,id+"",page),HomeShopBean.class);
+            }
+            @Override
+            public void onLoadMore() {
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,id+"",page),HomeShopBean.class);
+            }
+        });
+    }
+    //点击事件
+    @OnClick({R.id.new_design_image,R.id.fashion_image,R.id.life_image,R.id.serch_image,R.id.serch_btn,R.id.three_level})
+    public void imageClick(View v){
+        switch (v.getId()){
+            case R.id.new_design_image:
+                page = 1;
+                scrollView.setVisibility(View.GONE);
+                serchBtn.setVisibility(View.VISIBLE);
+                edSerch.setVisibility(View.VISIBLE);
+                serchImage.setVisibility(View.GONE);
+                linearLayoutNewDesign.setVisibility(View.VISIBLE);
+                textNewShow.setVisibility(View.VISIBLE);
+                textFashionShow.setVisibility(View.GONE);
+                textLifeShow.setVisibility(View.GONE);
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
+                setDatas(rxxpid);
+                break;
+            case R.id.fashion_image:
+                page = 1;
+                scrollView.setVisibility(View.GONE);
+                serchBtn.setVisibility(View.VISIBLE);
+                serchImage.setVisibility(View.GONE);
+                edSerch.setVisibility(View.VISIBLE);
+                linearLayoutNewDesign.setVisibility(View.VISIBLE);
+                textNewShow.setVisibility(View.GONE);
+                textFashionShow.setVisibility(View.VISIBLE);
+                textLifeShow.setVisibility(View.GONE);
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
+                setDatas(mlssId);
+                break;
+            case R.id.life_image:
+                page = 1;
+                scrollView.setVisibility(View.GONE);
+                serchBtn.setVisibility(View.VISIBLE);
+                serchImage.setVisibility(View.GONE);
+                edSerch.setVisibility(View.VISIBLE);
+                linearLayoutNewDesign.setVisibility(View.VISIBLE);
+                textNewShow.setVisibility(View.GONE);
+                textFashionShow.setVisibility(View.GONE);
+                textLifeShow.setVisibility(View.VISIBLE);
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
+                setDatas(pzshId);
+                break;
+            case R.id.serch_image:
+                serchBtn.setVisibility(View.VISIBLE);
+                edSerch.setVisibility(View.VISIBLE);
+                serchImage.setVisibility(View.GONE);
+                break;
+            case R.id.serch_btn:
+                page = 1;
+                String s = edSerch.getText().toString();
+                if (s == null||s.equals("")||s.isEmpty()){
+                    relativeLayoutNo.setVisibility(View.VISIBLE);
+                    scrollView.setVisibility(View.GONE);
+                    xRecyclerView.setVisibility(View.GONE);
+                    linearLayoutNewDesign.setVisibility(View.GONE);
+                }else {
+                    scrollView.setVisibility(View.GONE);
+                    xRecyclerView.setVisibility(View.VISIBLE);
+                    linearLayoutNewDesign.setVisibility(View.GONE);
+                    iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH, s, page), HomeserchBean.class);
+                    setxRecyclerView(s);
+                }
+                break;
+            case R.id.three_level:
+                /*if (isShow) {
+                    relativeLayoutOne.setVisibility(View.VISIBLE);
+                    relativeLayoutTwo.setVisibility(View.VISIBLE);
+                    linearLayou(recyclerViewOne);
+                    oneLevelAdapter = new OneLevelAdapter(getActivity());
+                    twoLevelAdapter = new TwoLevelAdapter(getActivity());
+                    recyclerViewOne.setAdapter(oneLevelAdapter);
+
+                    iPersenter.showRequestData(UrlApis.SHOP_ONE_LEVEL, OneLevelBean.class);
+                    linearLayou(recyclerViewtwo);
+                    recyclerViewtwo.setAdapter(twoLevelAdapter);
+                    twoLevelClick();
+                    iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL,"1001002"),TwoLevelBean.class);
+                }*/
+                toastPop();
+                popupWindow.showAsDropDown(imgLevel,0,25);
+                iPersenter.showRequestData(UrlApis.SHOP_ONE_LEVEL, OneLevelBean.class);
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL,"1001002"),TwoLevelBean.class);
+                break;
+                default:
+                    break;
+        }
+    }
+    //pop弹框
+    private void toastPop() {
+
+        // 用于PopupWindow的View
+        View contentView=LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_pop, null, false);
+        recyclerViewOne = contentView.findViewById(R.id.one_level_rv);
+        recyclerViewtwo = contentView.findViewById(R.id.two_level_rv);
+
+        oneLevelAdapter = new OneLevelAdapter(getActivity());
+        twoLevelAdapter = new TwoLevelAdapter(getActivity());
+        linearLayou(recyclerViewOne);
+        recyclerViewOne.setAdapter(oneLevelAdapter);
+
+        linearLayou(recyclerViewtwo);
+        recyclerViewtwo.setAdapter(twoLevelAdapter);
+
+        // 创建PopupWindow对象，其中：
+        // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
+        // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
+        popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        // 设置PopupWindow是否能响应外部点击事件
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        // 设置此参数获得焦点，否则无法点击，即：事件拦截消费
+        popupWindow.setFocusable(true);
+        oneLevelAdapter.setOnClick(new OneLevelAdapter.OnClick() {
+            @Override
+            public void Click(String commodityId) {
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL,commodityId),TwoLevelBean.class);
+            }
+        });
+
+        twoLevelClick();
+        popupWindow.dismiss();
+    }
+
+    //点击二级列表条目
+    private void twoLevelClick() {
+        twoLevelAdapter.setOnClick(new TwoLevelAdapter.OnClick() {
+            @Override
+            public void Click(final String id) {
+                page = 1;
+                gridLayout(xRecyclerView);
+                scrollView.setVisibility(View.GONE);
+                linearLayoutNewDesign.setVisibility(View.GONE);
+                xRecyclerView.setVisibility(View.VISIBLE);
+                twoLevelSerchAdapter = new TwoLevelSerchAdapter(getActivity());
+                xRecyclerView.setAdapter(twoLevelSerchAdapter);
+                xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+                    @Override
+                    public void onRefresh() {
+                        page = 1;
+                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
+                        xRecyclerView.refreshComplete();
+                    }
+                    @Override
+                    public void onLoadMore() {
+                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
+                        xRecyclerView.loadMoreComplete();
+                    }
+                });
+                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
+                popupWindow.dismiss();
+            }
+        });
+    }
+    //搜索
+    public void setxRecyclerView(final String s){
+        gridLayout(xRecyclerView);
+        homeSerchAdapter = new HomeSerchAdapter(getActivity());
+        xRecyclerView.setAdapter(homeSerchAdapter);
+        xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
+                xRecyclerView.refreshComplete();
+            }
+            @Override
+            public void onLoadMore() {
+                iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
+                xRecyclerView.loadMoreComplete();
+            }
+        });
+    }
+    //监听返回键
+    public void getBackData(boolean back){
+        if(back){
+            linearLayoutNewDesign.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+            xRecyclerView.setVisibility(View.GONE);
+            edSerch.setVisibility(View.GONE);
+            serchBtn.setVisibility(View.GONE);
+            serchImage.setVisibility(View.VISIBLE);
+            relativeLayoutNo.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void startRequestData(Object data) {
         if (data instanceof BannerBean){
@@ -199,6 +409,7 @@ public class HomePageFragment extends Fragment implements IView {
             xRecyclerViewNew.refreshComplete();
         }//点击搜索
         if (data instanceof HomeserchBean){
+            edSerch.setText("");
             HomeserchBean bean = (HomeserchBean) data;
             if (page == 1) {
                 if (bean.getResult().size() == 0){
@@ -230,185 +441,7 @@ public class HomePageFragment extends Fragment implements IView {
             page++;
         }
     }
-    //点击点点点隐藏了scroll显示xrecycle
-    public void setDatas(final int id){
-        gridLayout(xRecyclerViewNew);
-        homeShopAdapter = new HomeShopAdapter(getActivity());
-        xRecyclerViewNew.setAdapter(homeShopAdapter);
-        xRecyclerViewNew.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,id+"",page),HomeShopBean.class);
-            }
-            @Override
-            public void onLoadMore() {
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,id+"",page),HomeShopBean.class);
-            }
-        });
-    }
-    //点击事件
-    @OnClick({R.id.new_design_image,R.id.fashion_image,R.id.life_image,R.id.serch_image,R.id.serch_btn,R.id.three_level})
-    public void imageClick(View v){
-        switch (v.getId()){
-            case R.id.new_design_image:
-                page = 1;
-                scrollView.setVisibility(View.GONE);
-                serchBtn.setVisibility(View.VISIBLE);
-                edSerch.setVisibility(View.VISIBLE);
-                serchImage.setVisibility(View.GONE);
-                linearLayoutNewDesign.setVisibility(View.VISIBLE);
-                textNewShow.setVisibility(View.VISIBLE);
-                textFashionShow.setVisibility(View.GONE);
-                textLifeShow.setVisibility(View.GONE);
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
-                setDatas(rxxpid);
-                twoLevelIsShow();
-                break;
-            case R.id.fashion_image:
-                page = 1;
-                scrollView.setVisibility(View.GONE);
-                serchBtn.setVisibility(View.VISIBLE);
-                serchImage.setVisibility(View.GONE);
-                edSerch.setVisibility(View.VISIBLE);
-                linearLayoutNewDesign.setVisibility(View.VISIBLE);
-                textNewShow.setVisibility(View.GONE);
-                textFashionShow.setVisibility(View.VISIBLE);
-                textLifeShow.setVisibility(View.GONE);
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
-                setDatas(mlssId);
-                twoLevelIsShow();
-                break;
-            case R.id.life_image:
-                page = 1;
-                scrollView.setVisibility(View.GONE);
-                serchBtn.setVisibility(View.VISIBLE);
-                serchImage.setVisibility(View.GONE);
-                edSerch.setVisibility(View.VISIBLE);
-                linearLayoutNewDesign.setVisibility(View.VISIBLE);
-                textNewShow.setVisibility(View.GONE);
-                textFashionShow.setVisibility(View.GONE);
-                textLifeShow.setVisibility(View.VISIBLE);
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_URI,rxxpid+"",page),HomeShopBean.class);
-                setDatas(pzshId);
-                twoLevelIsShow();
-                break;
-            case R.id.serch_image:
-                serchBtn.setVisibility(View.VISIBLE);
-                edSerch.setVisibility(View.VISIBLE);
-                serchImage.setVisibility(View.GONE);
-                twoLevelIsShow();
-                break;
-            case R.id.serch_btn:
-                page = 1;
-                String s = edSerch.getText().toString();
-                scrollView.setVisibility(View.GONE);
-                xRecyclerView.setVisibility(View.VISIBLE);
-                linearLayoutNewDesign.setVisibility(View.GONE);
-                iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
-                setxRecyclerView(s);
-                twoLevelIsShow();
-                break;
-            case R.id.three_level:
-                if (isShow) {
-                    relativeLayoutOne.setVisibility(View.VISIBLE);
-                    relativeLayoutTwo.setVisibility(View.VISIBLE);
-                    linearLayou(recyclerViewOne);
-                    oneLevelAdapter = new OneLevelAdapter(getActivity());
-                    twoLevelAdapter = new TwoLevelAdapter(getActivity());
-                    recyclerViewOne.setAdapter(oneLevelAdapter);
-                    oneLevelClick();
-                    iPersenter.showRequestData(UrlApis.SHOP_ONE_LEVEL, OneLevelBean.class);
-                    linearLayou(recyclerViewtwo);
-                    recyclerViewtwo.setAdapter(twoLevelAdapter);
-                    twoLevelClick();
-                    iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL,"1001002"),TwoLevelBean.class);
-                }else{
-                    relativeLayoutOne.setVisibility(View.GONE);
-                    relativeLayoutTwo.setVisibility(View.GONE);
-                }
-                isShow = !isShow;
-                break;
-                default:
-                    break;
-        }
-    }
-    public void twoLevelIsShow(){
-        if (isShow){
-            relativeLayoutOne.setVisibility(View.GONE);
-            relativeLayoutTwo.setVisibility(View.GONE);
-        }
-    }
-    //点击二级列表条目
-    private void twoLevelClick() {
-        twoLevelAdapter.setOnClick(new TwoLevelAdapter.OnClick() {
-            @Override
-            public void Click(final String id) {
-                page = 1;
-                gridLayout(xRecyclerView);
-                scrollView.setVisibility(View.GONE);
-                xRecyclerView.setVisibility(View.VISIBLE);
-                relativeLayoutOne.setVisibility(View.GONE);
-                relativeLayoutTwo.setVisibility(View.GONE);
-                twoLevelSerchAdapter = new TwoLevelSerchAdapter(getActivity());
-                xRecyclerView.setAdapter(twoLevelSerchAdapter);
-                xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-                    @Override
-                    public void onRefresh() {
-                        page = 1;
-                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
-                        xRecyclerView.refreshComplete();
-                    }
-                    @Override
-                    public void onLoadMore() {
-                        iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
-                        xRecyclerView.loadMoreComplete();
-                    }
-                });
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL_SERCH,id,page),TwoLevelSerchBean.class);
-            }
-        });
-    }
-    //一级列表点击
-    private void oneLevelClick() {
-        oneLevelAdapter.setOnClick(new OneLevelAdapter.OnClick() {
-            @Override
-            public void Click(String commodityId) {
-                iPersenter.showRequestData(String.format(UrlApis.SHOP_TWO_LEVEL,commodityId),TwoLevelBean.class);
-            }
-        });
-    }
-    //搜索
-    public void setxRecyclerView(final String s){
-        gridLayout(xRecyclerView);
-        homeSerchAdapter = new HomeSerchAdapter(getActivity());
-        xRecyclerView.setAdapter(homeSerchAdapter);
-        xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
-                xRecyclerView.refreshComplete();
-            }
-            @Override
-            public void onLoadMore() {
-                iPersenter.showRequestData(String.format(UrlApis.HOME_SERCH,s,page),HomeserchBean.class);
-                xRecyclerView.loadMoreComplete();
-            }
-        });
-    }
-    //监听返回键
-    public void getBackData(boolean back){
-        if(back){
-            linearLayoutNewDesign.setVisibility(View.GONE);
-            scrollView.setVisibility(View.VISIBLE);
-            xRecyclerView.setVisibility(View.GONE);
-            edSerch.setVisibility(View.GONE);
-            serchBtn.setVisibility(View.GONE);
-            serchImage.setVisibility(View.VISIBLE);
-            relativeLayoutNo.setVisibility(View.GONE);
-        }
-    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

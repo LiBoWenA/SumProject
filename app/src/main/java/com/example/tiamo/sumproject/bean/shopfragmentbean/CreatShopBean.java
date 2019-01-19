@@ -2,7 +2,7 @@ package com.example.tiamo.sumproject.bean.shopfragmentbean;
 
 public class CreatShopBean {
     private int commodityId;
-    private int count;
+    private int amount;
 
     public int getCommodityId() {
         return commodityId;
@@ -12,11 +12,11 @@ public class CreatShopBean {
         this.commodityId = commodityId;
     }
 
-    public int getCount() {
-        return count;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

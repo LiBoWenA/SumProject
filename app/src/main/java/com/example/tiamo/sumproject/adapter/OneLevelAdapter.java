@@ -1,6 +1,7 @@
 package com.example.tiamo.sumproject.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,13 +43,12 @@ public class  OneLevelAdapter extends RecyclerView.Adapter<OneLevelAdapter.ViewH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OneLevelAdapter.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final OneLevelAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.textView.setText(list.get(i).getName());
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onClick != null){
-
                     onClick.Click(list.get(i).getId());
                 }
             }

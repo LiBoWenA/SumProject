@@ -7,17 +7,23 @@ import android.util.Log;
 
 import com.example.tiamo.sumproject.MyApp;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observer;
@@ -37,6 +43,19 @@ public class RxManager<T> {
     }
 
 
+    /**
+     * 可以这样生成Map<String, RequestBody> requestBodyMap
+     * Map<String, String> requestDataMap这里面放置上传数据的键值对。
+     */
+    public Map<String, RequestBody> generateRequestBody(Map<String, String> requesrDataMap) {
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        for (String key : requesrDataMap.keySet()) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),
+                    requesrDataMap.get(key) == null ? "" : requesrDataMap.get(key));
+            requestBodyMap.put(key, requestBody);
+        }
+        return requestBodyMap;
+    }
     private RxManager() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(15, TimeUnit.SECONDS);
@@ -124,6 +143,74 @@ public class RxManager<T> {
         return rxManager;
     }
 
+    /*public void postFile(String url, Map<String, String> map,HttpListener listener) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        MultipartBody multipartBody = filesToMultipartBody(map);
+
+        rxApis.postFile(url, multipartBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+    }
+
+
+    public static MultipartBody filesToMultipartBody(Map<String,String> map) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            File file = new File(entry.getValue());
+            builder.addFormDataPart(entry.getKey(), "图片1.png",
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file));
+        }
+
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
+    }*/
+    /**
+     *上传头像
+     * */
+    public static MultipartBody filesMultipar(Map<String,String> map){
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            File file = new File(entry.getValue());
+            builder.addFormDataPart(entry.getKey(),"tp.png",
+                    RequestBody.create(MediaType.parse("multipart/form-data"),file));
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
+    }
+    public void postFile(String url, Map<String,String> map,HttpListener listener){
+        if(map == null){
+            map = new HashMap<>();
+        }
+        MultipartBody multipartBody = filesMultipar(map);
+        rxApis.postFile(url,multipartBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+    }
+
+    //多图文上传
+    public void postduocon(String url, Map<String,String> params, List<File> list, HttpListener listener){
+        MultipartBody.Part[] parts=new MultipartBody.Part[list.size()];
+        int index=0;
+        for (File file: list){
+            RequestBody requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),file);
+            MultipartBody.Part filePart=MultipartBody.Part.createFormData("image",file.getName(),requestBody);
+            parts[index]=filePart;
+            index++;
+        }
+
+        rxApis.postDuoContent(url,params,parts)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(listener));
+
+    }
 
     private Observer getObserver(final HttpListener listener) {
         Observer observer = new Observer<ResponseBody>() {
@@ -163,6 +250,8 @@ public class RxManager<T> {
         void onSuccess(String data);
         void onFail(String error);
     }
+
+
 }
 
 

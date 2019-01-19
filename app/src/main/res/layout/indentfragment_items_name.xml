@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shop_item_shape"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:id="@+id/item_child_image"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_81"
+            android:layout_height="@dimen/dp_81" />
+        <RelativeLayout
+            android:padding="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/item_child_name"
+                android:textColor="#666666"
+                android:maxLines="2"
+                android:text="23"
+                android:paddingLeft="@dimen/dp_10"
+                android:textSize="@dimen/sp_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="#ff0000"
+                android:text="23"
+                android:paddingLeft="@dimen/dp_10"
+                android:textSize="@dimen/sp_14"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/item_child_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/item_but"
+                android:text="去评价"
+                android:textColor="#ffffff"
+                android:background="#ff5757"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_24" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

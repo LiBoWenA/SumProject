@@ -11,12 +11,13 @@
         android:layout_marginTop="@dimen/dp_142"
         >
         <TextView
+            android:id="@+id/my_head_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="我是吃不胖的小姐姐"
             android:layout_marginTop="@dimen/dp_60"
             android:textColor="#666"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_14"
             android:gravity="center"
             />
         <RelativeLayout
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="个人资料"
                 android:textColor="#666"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 android:layout_toRightOf="@id/grzl_img"
                 android:layout_marginLeft="@dimen/dp_20"
                 />
@@ -71,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="我的圈子"
                 android:textColor="#666"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 android:layout_toRightOf="@id/wdqz_img"
                 android:layout_marginLeft="@dimen/dp_20"
                 />
@@ -106,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:text="我的足迹"
                 android:textColor="#666"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 android:layout_toRightOf="@id/zj_img"
                 android:layout_marginLeft="@dimen/dp_20"
                 />
@@ -143,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:text="我的钱包"
                 android:textColor="#666"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 android:layout_toRightOf="@id/wdqb_img"
                 android:layout_marginLeft="@dimen/dp_20"
                 />
@@ -178,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:text="我的收获地址"
                 android:textColor="#666"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp_14"
                 android:layout_toRightOf="@id/shdz_img"
                 android:layout_marginLeft="@dimen/dp_20"
                 />
@@ -193,7 +194,8 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/my_head_img"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
         android:background="@mipmap/touxiang_wdf"

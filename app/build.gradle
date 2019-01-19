@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tiamo.sumproject"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -55,5 +55,10 @@ dependencies {
     implementation "io.reactivex:rxjava:$rootProject.rxjava"
     implementation "com.hwangjr.rxbus:rxbus:$rootProject.rxbus"
     implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.adapterRxjava"
+    implementation 'de.hdodenhof:circleimageview:2.0.0'
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'liji.library.dev:citypickerview:3.1.8'
+
 
 }

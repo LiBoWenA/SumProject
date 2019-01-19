@@ -48,7 +48,7 @@ public class ShowShopAdapter extends RecyclerView.Adapter<ShowShopAdapter.ViewHo
     public void onBindViewHolder(@NonNull ShowShopAdapter.ViewHolder viewHolder, int i) {
         Glide.with(context).load(list.get(i).getPic()).into(viewHolder.shopImg);
         viewHolder.tTitle.setText(list.get(i).getCommodityName());
-        viewHolder.tPrice.setText(list.get(i).getPrice()+"");
+        viewHolder.tPrice.setText("¥："+list.get(i).getPrice());
         viewHolder.tCount.setText("*"+list.get(i).getCount());
     }
 

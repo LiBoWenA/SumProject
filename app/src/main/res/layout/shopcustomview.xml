@@ -15,6 +15,8 @@
     <EditText
         android:id="@+id/shop_ednum"
         android:layout_width="@dimen/dp_25"
+        android:inputType="number"
+        android:background="@drawable/shape"
         android:layout_toRightOf="@id/shop_addnum"
         android:layout_height="wrap_content"
         />
@@ -23,6 +25,7 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:text="-"
+        android:gravity="center"
         android:layout_alignBottom="@id/shop_ednum"
         android:layout_toRightOf="@id/shop_ednum"
         android:textSize="22sp"

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/one_level"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/dp_24"
+        android:layout_below="@id/rel"
+        android:background="@mipmap/rectangle"
+        android:layout_height="@dimen/dp_36">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/one_level_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/two_level"
+        android:layout_below="@id/one_level"
+        android:layout_width="match_parent"
+        android:background="#805d5d5d"
+        android:padding="@dimen/dp_20"
+        android:layout_height="@dimen/dp_92">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/two_level_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+</RelativeLayout>

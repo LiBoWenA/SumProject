@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_10"
+    tools:context=".activity.myfragment_activity.CircleActivity">
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#666"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="我的圈子"
+        />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/activity_mycircle_xrecyclerview">
+
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+</LinearLayout>

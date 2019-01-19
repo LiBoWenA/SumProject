@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/dp_24"
+    android:paddingLeft="@dimen/dp_24"
+    android:layout_height="match_parent"
+    tools:context=".activity.indentfragment_activity.EvaluateActivity">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_30"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/homepage_fashion_selector"
+        android:elevation="@dimen/dp_4"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="@dimen/dp_85"
+            android:layout_height="@dimen/dp_98"
+            android:id="@+id/pl_img"
+            android:layout_margin="@dimen/dp_10"
+            />
+        <LinearLayout
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_marginTop="@dimen/dp_20"
+                android:id="@+id/pl_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginRight="@dimen/dp_15"
+                android:textSize="12sp"
+                android:textColor="#666"
+                />
+
+            <TextView
+                android:id="@+id/pl_price"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:textColor="#f00"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="@dimen/dp_97"
+        android:background="@drawable/serch_edtext"
+        >
+    <EditText
+        android:id="@+id/ed_pl"
+        android:background="@drawable/serch_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/sp_12"
+        android:hint="请在此写下你对商品的评价" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_below="@+id/re"
+        android:layout_marginTop="@dimen/dp_5"
+        android:id="@+id/issue_image_recycle"
+        >
+    </android.support.v7.widget.RecyclerView>
+    <RadioButton
+        android:id="@+id/radio_pl"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="同步到圈子"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#666"
+        />
+
+    <Button
+        android:id="@+id/sucess_pl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/pay_bg"
+        android:text="发表"
+        android:textColor="#fff"
+        android:layout_marginTop="@dimen/dp_80"
+        />
+</LinearLayout>

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CircleFragment extends Fragment implements IView {
     IPersenterImpl iPersenter;
@@ -36,12 +37,13 @@ public class CircleFragment extends Fragment implements IView {
     int page;
     private int ids;
     private String sessionId;
+    private Unbinder bind;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.circlefragment,null);
-        ButterKnife.bind(this,view);
+        bind = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -132,5 +134,12 @@ public class CircleFragment extends Fragment implements IView {
                 Toast.makeText(getContext(), bean.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        iPersenter.onDestory();
+        bind.unbind();
     }
 }

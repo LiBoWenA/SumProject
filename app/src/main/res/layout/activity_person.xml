@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.myfragment_activity.PersonActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:text="我的资料"
+        android:gravity="center"
+        android:textSize="@dimen/sp_16"
+        android:textColor="#666"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/homepage_fashion_selector"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        >
+        <TextView
+            android:id="@+id/wdtx_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30"
+            android:text="我的头像"
+            android:textColor="#666"
+            android:gravity="center_vertical"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_head"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:background="@mipmap/touxiang_wdf"
+            android:layout_alignParentRight="true"
+
+            />
+
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的昵称"
+            android:textColor="#666"
+            android:layout_below="@id/wdtx_text"
+            android:layout_marginTop="@dimen/dp_20"
+            />
+
+        <EditText
+            android:background="@drawable/shape"
+            android:id="@+id/name_text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/img_head"
+            android:textColor="#999999"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="用户名"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的密码"
+            android:textColor="#666"
+            android:layout_below="@id/name_text"
+            android:layout_marginTop="@dimen/dp_30"
+            />
+
+        <EditText
+            android:background="@drawable/shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_pass"
+            android:maxLength="15"
+            android:ellipsize="end"
+            android:textColor="#999999"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/name_text"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="账户密码"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
